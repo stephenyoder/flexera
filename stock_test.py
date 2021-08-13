@@ -28,6 +28,13 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(test4.calculate_max_profit(), test_answers[4])
         self.assertEqual(test5.calculate_max_profit(), test_answers[5])
 
+        self.assertEqual(test0.calculate_kth_highest_price(2)[-1], sorted(test_cases[0], reverse=True)[1])
+        self.assertEqual(test1.calculate_kth_highest_price(2)[-1], sorted(test_cases[1], reverse=True)[1])
+        self.assertEqual(test2.calculate_kth_highest_price(2)[-1], sorted(test_cases[2], reverse=True)[1])
+        self.assertEqual(test3.calculate_kth_highest_price(2)[-1], sorted(test_cases[3], reverse=True)[1])
+        self.assertEqual(test4.calculate_kth_highest_price(2)[-1], sorted(test_cases[4], reverse=True)[1])
+        self.assertEqual(test5.calculate_kth_highest_price(2)[-1], sorted(test_cases[5], reverse=True)[1])
+
 
 
         # self.assertEqual(True, False)
