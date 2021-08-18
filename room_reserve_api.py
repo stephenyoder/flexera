@@ -8,20 +8,22 @@
 # The Room_Reserve_API class is designed to store room reservation data
 
 #  Inputs:
-#   stock_prices: None
+#   None
 ###############################################################################
 class Room_Reserve_API:
     def __init__(self):
         self.rooms_reserved = set()
 
     #####################################################
-    # function to reserve a hotel room
+    # reserve:
+    #   function to reserve a hotel room
     #
     # Algorithm:
     #  Use a set (hashmap) to store rooms that have previously
     #  been reserved. Use set over dictionary because the key
     #  is not associated with a value other than already
-    #  existing in the hashmap.
+    #  existing in the hashmap. Set is advantageous because
+    #  of its constant lookup and insertion time
     #
     # Time Complexity: O(1)
     #
@@ -30,6 +32,7 @@ class Room_Reserve_API:
     #                    number requested to be reserved.
     #                    Accuracy of input string is the
     #                    responsibility of the caller.
+    #                    The only input checked is an empty string
     #
     # Outputs:
     #   True if room_to_reserve has NOT already been reserved

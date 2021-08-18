@@ -23,9 +23,10 @@ class Stock:
             self.stock_prices.append(price)
 
     #####################################################
-    # max profit is found by finding the largest difference
-    # between the current price of the stock and the lowest
-    # price of the stock from earlier in the day
+    # max_profit:
+    #  the max profit is found by finding the largest difference
+    #  between the current price of the stock and the lowest
+    #  price of the stock from earlier in the day
     #
     # Algorithm:
     #  Iterate through the stock prices, keep track of the
@@ -44,10 +45,6 @@ class Stock:
     #               of the stock during the day
     #####################################################
     def calculate_max_profit(self):
-        # there must be at least 2 elements/prices in the list to get a profit
-        if len(self.stock_prices)<2:
-            return 0
-
         max_profit = 0
         lowest_price = float('inf') # lowest price for the stock that has been seen so far
 
@@ -58,30 +55,30 @@ class Stock:
         return max_profit
 
     #####################################################
-    # function to find the kth largest price seen that day
+    # calculate_kth_highest_price:
+    #  function to find the kth largest price seen that day
     #
     # Algorithm:
     #  Iterate through the stock prices and add that price
     #  to a heapq.
     #  The heapq data structure is structured as a binary
     #  tree and is thus similar to using a
-    #  binary search to find where in the heapq to place
-    #  an element in the correct order. It is superior
-    #  to just sorting the input list of prices
-    #  because sorting has O(nlogn) time complexity whereas
-    #  using a heap has O(klogn) time complexity where
-    #  k <= n
+    #  binary search and takes O(logn) time for retrieving
+    #  an element. It is superiorto just sorting the
+    #  input list of prices because sorting has O(nlogn)
+    #  time complexity whereas using a heap has O(klogn)
+    #  time complexity where it is guaranteed k <= n
     #
     # Time Complexity: O(klogn)
     #
     # Inputs:
     #   k: integer representing the kth highest stock price
     #      seen during the day.
-    #      The minimum value is 0 and the maximum value is
+    #      The minimum value is 1 and the maximum value is
     #      n, the number of values the stock had during the day
     # Outputs:
-    #   k_largest: float representing the value of the stock
-    #              at its kth highest value during the day
+    #   nlargest: float representing the value of the stock
+    #             at its kth highest value during the day
     #####################################################
     def calculate_kth_highest_price(self, k):
 
