@@ -1,18 +1,26 @@
+###############################################################################
 # Programmer: Stephen Yoder
 # Developed for Flexera Assessment
-# Q2. You are tasked to study historic stock market performance.
-# You are given an array N of intraday stock prices containing n elements.
-# The profit/loss that can be made buying a stock at time i and selling it
-# at later time j can be expressed by (N[j] - N[i]), j > i. Write a time/size
-# efficient algorithm to calculate the maximum profit that can be made
-# buying and selling a stock in a single day given N.
-
+###############################################################################
 import heapq
 
+###############################################################################
+# Class Stock
+# The Stock class is designed to store stock data
+
+#  Inputs:
+#   stock_prices: List[float] representing the intraday stock price in chronological order.
+#                 The minimum value of an element in stock_prices is 0
+###############################################################################
 class Stock:
     def __init__(self, stock_prices):
-        # List to hold the stock prices for the day in increasing time order
-        self.stock_prices = stock_prices
+
+        # List to hold the stock prices for the day in increasing chronological time order
+        self.stock_prices = []
+        for price in stock_prices:
+            if price < 0:
+                raise ValueError("negative stock price")
+            self.stock_prices.append(price)
 
     #####################################################
     # max profit is found by finding the largest difference
@@ -25,15 +33,27 @@ class Stock:
     #  between the lowest price and the current prices.
     #  Update max_profit if greater than the current
     #  max_profit
+    #
+    # Time Complexity: O(n)
+    #
+    # Inputs:
+    #   None
+    # Outputs:
+    #   max_profit: float representing the maximum profit
+    #               that can be obtained by making one buy and sell
+    #               of the stock during the day
     #####################################################
     def calculate_max_profit(self):
+        # there must be at least 2 elements/prices in the list to get a profit
+        if len(self.stock_prices)<2:
+            return 0
+
         max_profit = 0
         lowest_price = float('inf') # lowest price for the stock that has been seen so far
 
         for price in self.stock_prices:
             lowest_price = min(lowest_price, price)
-            current_profit = price - lowest_price
-            max_profit = max(max_profit, current_profit)
+            max_profit = max(max_profit, price - lowest_price)
 
         return max_profit
 
@@ -44,19 +64,31 @@ class Stock:
     #  Iterate through the stock prices and add that price
     #  to a heapq.
     #  The heapq data structure is structured as a binary
-    #  tree and is thus essentially equivalent to using a
+    #  tree and is thus similar to using a
     #  binary search to find where in the heapq to place
     #  an element in the correct order. It is superior
     #  to just sorting the input list of prices
-    #  because retrieving the Nth element will require
-    #  iterating through the whole list, which is O(N)
-    #  compared to the heapq/binary search which is
-    #  O(logN).
+    #  because sorting has O(nlogn) time complexity whereas
+    #  using a heap has O(klogn) time complexity where
+    #  k <= n
+    #
+    # Time Complexity: O(klogn)
+    #
+    # Inputs:
+    #   k: integer representing the kth highest stock price
+    #      seen during the day.
+    #      The minimum value is 0 and the maximum value is
+    #      n, the number of values the stock had during the day
+    # Outputs:
+    #   k_largest: float representing the value of the stock
+    #              at its kth highest value during the day
     #####################################################
     def calculate_kth_highest_price(self, k):
-        prices_hq = [] # heapq to store the prices for the day
 
-        for price in self.stock_prices:
-            heapq.heappush(prices_hq, price)
+        if not self.stock_prices or k not in range(1, len(self.stock_prices)+1):
+            return -1
 
-        return heapq.nlargest(k, prices_hq)
+        stock_prices_heapq = self.stock_prices[:] # deep copy so self.stock_prices is not converted to a heapq
+        heapq.heapify(stock_prices_heapq) # heapq to store the prices for the day
+
+        return heapq.nlargest(k, stock_prices_heapq)[-1]
