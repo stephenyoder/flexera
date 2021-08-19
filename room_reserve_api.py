@@ -28,7 +28,8 @@ class Room_Reserve_API:
     # Time Complexity: O(1)
     #
     # Inputs:
-    #   room_to_reserve: string containing the hotel and room
+    #   room_to_reserve: string (case insensitive)
+    #                    containing the hotel and room
     #                    number requested to be reserved.
     #                    Accuracy of input string is the
     #                    responsibility of the caller.
@@ -39,8 +40,15 @@ class Room_Reserve_API:
     #   False if room_to_reserve has already been reserved or is empty string
     #####################################################
     def reserve(self, room_to_reserve):
+
+        # convert all alphabetical characters in input string to make case insensitive
+        room_to_reserve = room_to_reserve.lower()
+
+        # return False if empty string or room has already been reserved
         if not room_to_reserve or room_to_reserve in self.rooms_reserved:
             return False
+
+        # otherwise, add hotel room to set that stores the rooms that have been reserved and return True
         else:
             self.rooms_reserved.add(room_to_reserve)
             return True
