@@ -5,9 +5,11 @@
 import heapq
 
 ###############################################################################
-# Class Stock_Profit
-# The Stock_Profit class is designed to store stock data in chronological order
-
+# Class kth_Highest_Stock_Price
+# The kth_Highest_Stock_Price class is designed to store stock data in chronological order
+#  A (min/max)heapq data structure is a binary heap used as a priority queue where the 0th
+#  element is guarenteed to be the min/max value in the heapq. It provides O(logn) push and pop time
+#
 #  Inputs:
 #   stock_prices: List[float] representing the intraday stock price in chronological order.
 #                 The minimum value of an element in stock_prices is 0
@@ -22,24 +24,21 @@ class kth_Highest_Stock_Price:
                 raise ValueError("negative stock price")
             self.stock_prices.append(price)
 
-        heapq.heapify(self.stock_prices)  # heapq to store the prices for the day
-
     #####################################################
     # calculate_kth_highest_price:
     #  function to find the kth largest price seen that day
     #
     # Algorithm:
-    #  Iterate through the stock prices and add that price
-    #  to a heapq.
-    #  The heapq data structure is structured as a binary
-    #  tree and is thus similar to using a
-    #  binary search and takes O(logn) time for retrieving
-    #  an element. It is superiorto just sorting the
+    #  Use python's built in heapq function, nlargest()
+    #  The
+    #  It is superior to just sorting the
     #  input list of prices because sorting has O(nlogn)
-    #  time complexity whereas using a heap has O(klogn)
-    #  time complexity where it is guaranteed k <= n
+    #  time complexity whereas using a heap has O(nlogk)
+    #  time complexity for nlargest where it is guaranteed k <= n.
+    #  However, creating the heapq solution requires O(k) space
+    #  whereas sorting is done in place O(1)
     #
-    # Time Complexity: O(klogn)
+    # Time Complexity: O(nlogk)
     #
     # Inputs:
     #   k: integer representing the kth highest stock price
@@ -49,6 +48,8 @@ class kth_Highest_Stock_Price:
     # Outputs:
     #   nlargest: float representing the value of the stock
     #             at its kth highest value during the day
+    #             Returns -1 if there is no stock data or
+    #             k is not in the valid range
     #####################################################
     def calculate_kth_highest_price(self, k):
 

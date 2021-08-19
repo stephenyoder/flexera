@@ -69,6 +69,9 @@ class kth_Highest_Stock_Price_Test(unittest.TestCase):
         self.assertRaises(ValueError, kth_Highest_Stock_Price, [-1, -2.3, 5, 0])
         self.assertRaises(ValueError, kth_Highest_Stock_Price, [0, 2, 5, 0, -3.3])
 
+        # for all x test cases, test k from 0 to len(test_cases[x]). When 0 <= i <= len(test_cases[x]), compare it to the alternate method of getting the kth largest -
+        # sorting the list in descending order and getting the i-1th element. When i is not in the range, expect -1
+
         for i in range(len(test_cases[0])+2):
             self.assertEqual(test0.calculate_kth_highest_price(i), sorted(test_cases[0], reverse=True)[i-1] if i in range(1, len(test_cases[0])+1) else -1)
         for i in range(len(test_cases[1])+2):
